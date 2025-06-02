@@ -10,7 +10,7 @@ export const sendMessage = async (
   id: string,
   receiver_name: string,
   receiver_avatar: string,
-  data: TMessageSchema,
+  data: any,
 ) => {
   await messageRequest.post('/messages', {
     receiver_uuid: id,
