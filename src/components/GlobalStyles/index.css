@@ -1,0 +1,56 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-primary: #ff6e00;
+  --color-secondary: rgba(0, 0, 0, 0.5);
+
+  --color-skyBlue-500: #0d99ff;
+  --color-skyBlue-700: #111827;
+  --color-skyBlue-900: #17265c;
+
+  --color-LGreen-500: #05892d;
+
+  --font-VNPro: 'VNPro', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
+
+  /* Custom shadow box */
+  --shadow-primary: 0 4px 20px rgb(255 110 0 / 0.5);
+
+  /* shadow-[0_4px_20px_rgba(34,197,94,0.4)] */
+
+  /* Default layout */
+  --default-layout-header-height: 80px;
+}
+
+body {
+  font-family: var(--font-VNPro);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+
+/* Fonts emmbeded */
+@font-face {
+  font-family: VNPro;
+  src: url('fonts/BeVietnamPro-Thin.woff2');
+  font-weight: 100;
+}
+
+
+@font-face {
+  font-family: VNPro;
+  src: url('fonts/BeVietnamPro-Light.woff2');
+  font-weight: 300;
+}
+
+@font-face {
+  font-family: VNPro;
+  src: url('fonts/BeVietnamPro-Regular.woff2');
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: VNPro;
+  src: url('fonts/BeVietnamPro-Bold.woff2');
+  font-weight: 700;
+}
