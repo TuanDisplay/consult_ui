@@ -41,7 +41,7 @@ export default function MessageContent({
         dataDe?.map((item, index) => {
           return (
             <div key={index}>
-              {item.sender_uuid === reveicer_id ? (
+              {item.receiver_uuid === reveicer_id ? (
                 senderData && (
                   <MessageItem
                     avatar={senderData.image}
