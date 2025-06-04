@@ -5,7 +5,7 @@ const messageRequest = axios.create({
 });
 
 messageRequest.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem('consultToken');
   if (token) {
     config.headers['x-token'] = token;
   }

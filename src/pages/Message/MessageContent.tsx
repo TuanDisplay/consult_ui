@@ -40,11 +40,10 @@ export default function MessageContent({
       ) : (
         dataDe?.map((item, index) => {
           return (
-            <>
-              {item.sender_uuid !== reveicer_id ? (
+            <div key={index}>
+              {item.sender_uuid === reveicer_id ? (
                 senderData && (
                   <MessageItem
-                    key={index}
                     avatar={senderData.image}
                     email={senderData.email}
                     name={senderData.expertname}
@@ -55,7 +54,6 @@ export default function MessageContent({
                 )
               ) : (
                 <MessageItem
-                  key={index}
                   avatar={reveicer_avatar}
                   email={reveicer_email}
                   name={reveicer_name}
@@ -64,7 +62,7 @@ export default function MessageContent({
                   time={item.created_at}
                 />
               )}
-            </>
+            </div>
           );
         })
       )}
