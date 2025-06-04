@@ -7,12 +7,12 @@ import Modal from "~/components/Modal";
 import * as messageService from "~/services/message.service";
 
 import "react-quill-new/dist/quill.snow.css";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface IMessageModal {
-  id: string;
-  receiver_avatar: string;
+  reveicer_id: string;
   receiver_name: string;
-  setMessageModal: any;
+  setMessageModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 interface IMessageForm {
@@ -21,9 +21,8 @@ interface IMessageForm {
 }
 
 export default function MessageModal({
-  id,
+  reveicer_id,
   receiver_name,
-  receiver_avatar,
   setMessageModal,
 }: IMessageModal) {
   const {
@@ -37,6 +36,8 @@ export default function MessageModal({
     mode: "onChange",
   });
 
+  const queryClient = useQueryClient();
+
   const title = watch("title");
   const content = watch("content");
 
@@ -44,13 +45,10 @@ export default function MessageModal({
 
   const onSubmit = async (data: IMessageForm) => {
     try {
-      await messageService.sendMessage(
-        id,
-        receiver_name,
-        receiver_avatar,
-        data
-      );
+      await messageService.sendMessage(reveicer_id, data);
       reset();
+      queryClient.invalidateQueries({ queryKey: ["messageDe"] });
+      setMessageModal(false);
       toast.success("Gửi tin nhắn thành công");
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;

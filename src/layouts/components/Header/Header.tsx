@@ -1,6 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
 import { CalendarSearch, LogOut, Mail } from "lucide-react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import type { IExpProfileApi } from "~/common/types";
 import * as expertService from "~/services/expert.service";
 
 export default function Header() {
@@ -16,6 +18,14 @@ export default function Header() {
       console.error(err);
     }
   };
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["expert-profile"],
+    queryFn: async (): Promise<IExpProfileApi> => {
+      const res = await expertService.expertProfile();
+      return res;
+    },
+  });
 
   return (
     <div className="h-[60px] shadow-2xl flex items-center justify-between px-10">
@@ -50,10 +60,17 @@ export default function Header() {
         <div className="flex gap-2 items-center">
           <div>
             <span>Xin chào, </span>
-            <span className="font-bold">Ths. Viết Tuấn</span>
+            <span className="font-bold">
+              {" "}
+              {isLoading ? "Vô danh" : data?.expertname}
+            </span>
           </div>
           <div className="rounded-full h-10 w-10 overflow-hidden">
-            <img src="/AvtTuan.jpg" alt="avatar" className="object-cover" />
+            <img
+              src={isLoading ? "/no-user.png" : data?.image}
+              alt="avatar"
+              className="object-cover"
+            />
           </div>
         </div>
       </div>

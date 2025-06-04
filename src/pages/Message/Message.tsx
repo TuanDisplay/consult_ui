@@ -2,9 +2,10 @@ import { Search } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import Button from "~/components/Button";
-import type { IUMesApi } from "~/common/types";
+import type { IExpProfileApi, IUMesApi } from "~/common/types";
 import MessageContent from "./MessageContent";
 import * as messageService from "~/services/message.service";
+import * as expertService from "~/services/expert.service";
 import MessageModal from "./MessageModal";
 
 export default function Message() {
@@ -12,7 +13,7 @@ export default function Message() {
     uuid: "",
     avatar: "",
     name: "",
-    title: "",
+    email: "",
   });
   const [isMessageModal, setMessageModal] = useState<boolean>(false);
 
@@ -21,6 +22,14 @@ export default function Message() {
     queryFn: async (): Promise<IUMesApi[]> => {
       const res = await messageService.messages();
       return res.partners;
+    },
+  });
+
+  const { data: expData } = useQuery({
+    queryKey: ["expert-profile"],
+    queryFn: async (): Promise<IExpProfileApi> => {
+      const res = await expertService.expertProfile();
+      return res;
     },
   });
 
@@ -34,8 +43,7 @@ export default function Message() {
     <>
       {isMessageModal && (
         <MessageModal
-          id={selectedUser.uuid}
-          receiver_avatar={selectedUser.avatar}
+          reveicer_id={selectedUser.uuid}
           receiver_name={selectedUser.name}
           setMessageModal={setMessageModal}
         />
@@ -67,10 +75,10 @@ export default function Message() {
                     {msg.name == "" ? "Không xác định" : msg.name}
                   </div>
                   <div
-                    title={msg.title}
+                    title={msg.email}
                     className="line-clamp-1 text-xs text-gray-500"
                   >
-                    {msg.title}
+                    {msg.email}
                   </div>
                 </div>
               </div>
@@ -95,7 +103,11 @@ export default function Message() {
                 <Search className="absolute top-1/2 left-2 h-4 w-4 -translate-y-1/2 text-gray-400" />
               </div>
             </div>
-            <MessageContent uuid_reveicer={selectedUser.uuid} />
+            <MessageContent               reveicer_id={selectedUser.uuid}
+              reveicer_avatar={selectedUser.avatar}
+              reveicer_name={selectedUser.name}
+              reveicer_email={selectedUser.email}
+              senderData={expData} />
           </div>
         </div>
       </div>

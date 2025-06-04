@@ -1,7 +1,7 @@
 export interface IUMesApi {
   avatar: string;
   name: string;
-  title: string;
+  email: string;
   uuid: string;
 }
 
@@ -16,4 +16,28 @@ export interface IUMesDeApi {
   uuid: string;
   created_at: string;
   is_delete: number;
+}
+
+export interface IExpProfile {
+  expert_name: string;
+  expert_desc: string;
+  achievements: { value: string }[];
+  majors: { value: string }[];
+  password: string;
+  expert_avatar: string;
+}
+
+export interface IExpProfileApi {
+  uuid: string;
+  expertname: string;
+  email: string,
+  introduce: string;
+  achievement: string[];
+  industry: string[];
+  password: string;
+  image: string;
+  is_active: number;
+  rating: number;
+  view: number;
+  consultation: number;
 }

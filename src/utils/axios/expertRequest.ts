@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from "axios";
 
 const expertRequest = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL_EXPERT,
 });
 
 expertRequest.interceptors.request.use((config) => {
-  const token = localStorage.getItem('accessToken');
+  const token = localStorage.getItem("consultToken");
   if (token) {
-    config.headers['x-token'] = token;
+    config.headers["x-token"] = token;
   }
   return config;
 });

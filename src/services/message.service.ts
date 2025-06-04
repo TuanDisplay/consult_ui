@@ -1,21 +1,13 @@
-
-import {messageRequest} from '~/utils/axios';
+import { messageRequest } from "~/utils/axios";
 
 export const messages = async () => {
-  const res = await messageRequest.get('/messages');
+  const res = await messageRequest.get("/messages");
   return res.data;
 };
 
-export const sendMessage = async (
-  id: string,
-  receiver_name: string,
-  receiver_avatar: string,
-  data: any,
-) => {
-  await messageRequest.post('/messages', {
+export const sendMessage = async (id: string, data: any) => {
+  await messageRequest.post("/messages", {
     receiver_uuid: id,
-    receiver_name: receiver_name,
-    receiver_image: receiver_avatar,
     title: data.title,
     content: data.content,
   });
