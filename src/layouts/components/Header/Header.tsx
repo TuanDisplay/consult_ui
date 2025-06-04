@@ -1,7 +1,22 @@
 import { CalendarSearch, LogOut, Mail } from "lucide-react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
+import * as expertService from "~/services/expert.service";
 
 export default function Header() {
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await expertService.logout();
+      localStorage.removeItem("consultToken");
+      navigate("/consult-login");
+      toast.success("Đã đăng xuất");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <div className="h-[60px] shadow-2xl flex items-center justify-between px-10">
       <Link to="/">
@@ -26,6 +41,7 @@ export default function Header() {
           <div
             title="Log out"
             className="bg-[#F5DCE0] p-2.5 cursor-pointer rounded-lg group"
+            onClick={handleLogout}
           >
             <LogOut className="text-[#FF5B5B] group-hover:text-red-300 duration-300" />
           </div>
@@ -34,7 +50,7 @@ export default function Header() {
         <div className="flex gap-2 items-center">
           <div>
             <span>Xin chào, </span>
-            <span className="font-bold">Ths. Viết Tuấn </span>
+            <span className="font-bold">Ths. Viết Tuấn</span>
           </div>
           <div className="rounded-full h-10 w-10 overflow-hidden">
             <img src="/AvtTuan.jpg" alt="avatar" className="object-cover" />

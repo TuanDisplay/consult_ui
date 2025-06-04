@@ -1,5 +1,6 @@
 import { expertRequest } from "~/utils/axios";
 
+
 export const expertProfile = async () => {
   const res = await expertRequest.get("/expert/my-profile");
   return res.data;
@@ -10,5 +11,10 @@ export const login = async (email: string, password: string) => {
     email: email,
     password: password,
   });
+  return res.data;
+};
+
+export const logout = async () => {
+  const res = await expertRequest.post("/expert/logout");
   return res.data;
 };

@@ -1,20 +1,24 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import Button from "~/components/Button";
 
 import * as expertService from "~/services/expert.service";
 
 export default function ConsultLogin() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const res = await expertService.login(email, password);
       const token = res.data.token;
+      setLoading(false);
       if (token) {
         localStorage.setItem("consultToken", token);
         navigate("/");
@@ -56,12 +60,13 @@ export default function ConsultLogin() {
               className="w-full px-4 py-2 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
           </div>
-          <button
+          <Button
             type="submit"
             className="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded-xl transition duration-200"
+            disable={isLoading}
           >
             Đăng nhập
-          </button>
+          </Button>
         </form>
       </div>
     </div>
