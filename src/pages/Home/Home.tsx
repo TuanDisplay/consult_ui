@@ -1,4 +1,4 @@
-import Comment from "~/components/Comment";
+import Comment from "./Comment";
 import { convertCategoryName } from "~/utils/files";
 import { useQuery } from "@tanstack/react-query";
 import * as expertService from "~/services/expert.service";

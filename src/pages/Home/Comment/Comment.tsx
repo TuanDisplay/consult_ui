@@ -1,7 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import { Star } from "lucide-react";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import type { IExpReviewItem, IExpReviewPage } from "~/common/types";
+import PaginationBar from "~/components/PaginationBar";
 import LoadingScreen from "~/layouts/components/LoadingScreen";
 import * as ratingService from "~/services/rating.service";
 
@@ -21,6 +22,8 @@ const RatingStars = ({ rating }: { rating: number }) => {
 };
 
 export default function Comment({ expert_id }: { expert_id: string }) {
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const { data, isLoading } = useQuery({
     queryKey: ["expReview"],
     queryFn: async (): Promise<IExpReviewPage> => {
@@ -70,6 +73,12 @@ export default function Comment({ expert_id }: { expert_id: string }) {
           </>
         )}
       </div>
+      <PaginationBar
+        currentPage={currentPage}
+        itemsPerPage={data?.limit ? data?.limit : 0}
+        totalItems={data?.total ? data.total : 0}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

@@ -1,13 +1,13 @@
-import { Dispatch, SetStateAction } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import Button from '~/components/Button';
-import clsx from 'clsx';
+import type { SetStateAction } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import Button from "~/components/Button";
+import clsx from "clsx";
 
 interface IPaginationBar {
   totalItems: number;
   itemsPerPage: number;
   currentPage: number;
-  setCurrentPage: Dispatch<SetStateAction<number>>;
+  setCurrentPage: React.Dispatch<SetStateAction<number>>;
 }
 
 export default function PaginationBar({
@@ -34,8 +34,8 @@ export default function PaginationBar({
         <Button
           key={i}
           onClick={() => setCurrentPage(i + 1)}
-          className={clsx('h-10 w-10', {
-            'opacity-30': currentPage === i + 1,
+          className={clsx("h-10 w-10", {
+            "opacity-30": currentPage === i + 1,
           })}
           primary
         >
