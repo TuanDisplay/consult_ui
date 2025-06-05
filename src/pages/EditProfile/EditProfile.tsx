@@ -8,7 +8,8 @@ import { convertToBase64 } from "~/utils/files";
 import * as expertService from "~/services/expert.service";
 import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import type { IExpProfileApi } from "~/common/types";
 
 export interface FormValues {
   expert_name: string;
@@ -24,6 +25,14 @@ const EditProfile = () => {
   const { expertId } = useParams();
   const navigite = useNavigate();
 
+  const { data } = useQuery({
+    queryKey: ["expert-profile"],
+    queryFn: async (): Promise<IExpProfileApi> => {
+      const res = await expertService.expertProfile();
+      return res;
+    },
+  });
+
   const queryClient = useQueryClient();
 
   const {
@@ -34,10 +43,14 @@ const EditProfile = () => {
     formState: { isSubmitting },
   } = useForm<FormValues>({
     defaultValues: {
-      expert_name: "",
-      expert_desc: "",
-      achievements: [{ value: "" }],
-      majors: [{ value: "" }],
+      expert_name: data?.expertname,
+      expert_desc: data?.introduce,
+      achievements: data?.achievement.map((item) => {
+        return { value: item };
+      }),
+      majors: data?.industry.map((item) => {
+        return { value: item };
+      }),
       password: "",
       expert_avatar: "",
     },
@@ -81,13 +94,13 @@ const EditProfile = () => {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <div className="w-full max-w-3xl bg-white shadow-lg rounded-2xl p-8">
         <h2 className="text-2xl font-semibold text-gray-800 mb-6 text-center">
-          Edit Expert Profile
+          Chỉnh sửa thông tin chuyên gia
         </h2>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700">
-                Expert name:
+                Tên chuyên gia:
               </label>
               <input
                 type="text"
@@ -98,7 +111,7 @@ const EditProfile = () => {
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700">
-                Description:
+                Giới thiệu bản thân:
               </label>
               <textarea
                 {...register("expert_desc")}
@@ -109,7 +122,7 @@ const EditProfile = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Achievements:
+                Thành tựu:
               </label>
               {fields.map((field, index) => {
                 return (
@@ -136,18 +149,19 @@ const EditProfile = () => {
                 );
               })}
               <Button
+                type="button"
                 leftIcon={<Plus size={16} />}
                 className="mt-1 text-blue-600 hover:text-blue-800 text-sm"
                 onClick={() => append({ value: "" })}
-                disable={fields.length > 3}
+                disable={fields.length > 2}
               >
-                Add Achievement
+                Thêm thành tựu
               </Button>
             </div>
 
             <div>
               <label className="block text-sm font-medium text-gray-700">
-                Industries:
+                Lĩnh vực:
               </label>
               {majorFields.map((major, index) => {
                 return (
@@ -184,18 +198,19 @@ const EditProfile = () => {
               })}
 
               <Button
+                type="button"
                 leftIcon={<Plus size={16} />}
                 className="mt-1 text-blue-600 hover:text-blue-800 text-sm"
                 onClick={() => majorAppend({ value: "" })}
                 disable={majorFields.length > 3}
               >
-                Add Industry
+                Thêm lĩnh vực
               </Button>
             </div>
 
             <div className="md:col-span-2">
               <label className="block text-sm font-medium text-gray-700">
-                Password:
+                Mật khẩu mới:
               </label>
               <input
                 type="password"
@@ -207,7 +222,7 @@ const EditProfile = () => {
             <div className="md:col-span-2">
               <div className="w-[250px] rounded-xl bg-white">
                 <label className="block text-sm font-medium text-gray-700">
-                  Avatar:
+                  Hình đại diện:
                 </label>
                 <div className="rounded-xl border-1 border-dashed p-2">
                   <label
@@ -247,7 +262,7 @@ const EditProfile = () => {
               primary
               disable={isSubmitting}
             >
-              {isSubmitting ? "Saving..." : "Save"}
+              {isSubmitting ? "Đang lưu..." : "Xác nhận lưu"}
             </Button>
           </div>
         </form>

@@ -1,12 +1,10 @@
 import Comment from "~/components/Comment";
-import { CommentCard } from "~/common/data";
 import { convertCategoryName } from "~/utils/files";
 import { useQuery } from "@tanstack/react-query";
 import * as expertService from "~/services/expert.service";
 import type { IExpProfileApi } from "~/common/types";
 import Button from "~/components/Button";
 import LoadingScreen from "~/layouts/components/LoadingScreen";
-// import LoadingScreen from '~/layouts/components/LoadingScreen';
 
 export default function Home() {
   const { data, isLoading } = useQuery({
@@ -97,22 +95,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className="mx-8 mt-10">
-            <div className="text-xl font-bold">Đánh giá và bình luận</div>
-            <div className="mt-5">
-              {CommentCard.map((item) => {
-                return (
-                  <Comment
-                    key={item.id}
-                    avatar={item.imageUrl}
-                    username={item.author}
-                    commentDay={item.publishDate}
-                    content={item.desc}
-                  />
-                );
-              })}
-            </div>
-          </div>
+          <Comment expert_id={data?.uuid ? data?.uuid : ""} />
         </div>
       )}
     </>

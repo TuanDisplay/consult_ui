@@ -27,7 +27,7 @@ export default function Message() {
     queryKey: ["message"],
     queryFn: async (): Promise<IUMesApi[]> => {
       const res = await messageService.messages();
-      return res.partners;
+      return res.partners || [];
     },
   });
 
@@ -43,7 +43,7 @@ export default function Message() {
     if (dataList && dataList?.length > 0) {
       setSelectedUser(dataList[0]);
     }
-  }, [selectedUser, setSelectedUser, dataList]);
+  }, [dataList]);
 
   return (
     <>

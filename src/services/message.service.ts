@@ -10,6 +10,7 @@ export const sendMessage = async (id: string, data: any) => {
     receiver_uuid: id,
     title: data.title,
     content: data.content,
+    user_type: "customer",
   });
 };
 

@@ -30,7 +30,7 @@ export interface IExpProfile {
 export interface IExpProfileApi {
   uuid: string;
   expertname: string;
-  email: string,
+  email: string;
   introduce: string;
   achievement: string[];
   industry: string[];
@@ -40,4 +40,20 @@ export interface IExpProfileApi {
   rating: number;
   view: number;
   consultation: number;
+}
+
+export interface IExpReviewPage {
+  limit: number;
+  page: number;
+  pages: number;
+  total: number;
+  items: IExpReviewItem[];
+}
+
+export interface IExpReviewItem {
+  uuid: string;
+  customer_uuid: string;
+  customer_name: string;
+  rating: number;
+  comment: string;
 }

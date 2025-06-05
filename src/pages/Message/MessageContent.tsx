@@ -1,7 +1,7 @@
+import { useQuery } from "@tanstack/react-query";
 import { WrapperContent } from "~/components/Content";
 import * as messageService from "~/services/message.service";
 import type { IUMesDeApi } from "~/common/types";
-import { useQuery } from "@tanstack/react-query";
 import type { IExpProfileApi } from "~/common/types";
 import MessageItem from "./MessageItem";
 
