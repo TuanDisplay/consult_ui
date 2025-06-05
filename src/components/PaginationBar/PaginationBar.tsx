@@ -16,6 +16,9 @@ export default function PaginationBar({
   currentPage,
   setCurrentPage,
 }: IPaginationBar) {
+  
+  if (totalItems < 1) return;
+
   const totalPages = Math.ceil(totalItems / itemsPerPage);
 
   return (
