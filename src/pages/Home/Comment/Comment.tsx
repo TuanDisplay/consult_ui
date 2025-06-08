@@ -25,7 +25,7 @@ export default function Comment({ expert_id }: { expert_id: string }) {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ["expReview"],
+    queryKey: ["expReview", expert_id],
     queryFn: async (): Promise<IExpReviewPage> => {
       const res = await ratingService.expReview(expert_id);
       return res;
@@ -41,7 +41,7 @@ export default function Comment({ expert_id }: { expert_id: string }) {
       <div className="text-xl font-bold">Đánh giá và bình luận</div>
       <div className="mt-5">
         {isLoading ? (
-          <LoadingScreen />
+          <LoadingScreen className="!h-[40vh]" />
         ) : (
           <>
             {reviewData.length === 0 || reviewData === null ? (
@@ -55,7 +55,11 @@ export default function Comment({ expert_id }: { expert_id: string }) {
                   >
                     <div className="flex items-center gap-5">
                       <img
-                        src={"no-user.png"}
+                        src={
+                          item.customerAvartar
+                            ? item.customerAvartar
+                            : "no-user.png"
+                        }
                         alt="avatar"
                         className="h-8 w-8 rounded-full bg-cover"
                       />

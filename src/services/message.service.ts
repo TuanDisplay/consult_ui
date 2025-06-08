@@ -5,12 +5,15 @@ export const messages = async () => {
   return res.data;
 };
 
-export const sendMessage = async (id: string, data: any) => {
+export const sendMessage = async (
+  id: string,
+  data: { title: string; content: string }
+) => {
   await messageRequest.post("/messages", {
     receiver_uuid: id,
     title: data.title,
     content: data.content,
-    user_type: "customer",
+    receiver_type: "customer",
   });
 };
 

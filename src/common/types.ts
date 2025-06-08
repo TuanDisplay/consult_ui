@@ -54,6 +54,7 @@ export interface IExpReviewItem {
   uuid: string;
   customer_uuid: string;
   customer_name: string;
+  customerAvartar: string;
   rating: number;
   comment: string;
 }
