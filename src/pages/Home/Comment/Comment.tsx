@@ -5,6 +5,7 @@ import type { IExpReviewItem, IExpReviewPage } from "~/common/types";
 import PaginationBar from "~/components/PaginationBar";
 import LoadingScreen from "~/layouts/components/LoadingScreen";
 import * as ratingService from "~/services/rating.service";
+import { convertIsoDate } from "~/utils/files";
 
 const RatingStars = ({ rating }: { rating: number }) => {
   return (
@@ -67,7 +68,9 @@ export default function Comment({ expert_id }: { expert_id: string }) {
                     </div>
                     <div className="flex gap-5 items-center">
                       <RatingStars rating={item.rating} />
-                      <span className="text-sm mt-0.5">{"20/05/2003"}</span>
+                      <span className="text-sm mt-0.5">
+                        {convertIsoDate(item.created_at)}
+                      </span>
                     </div>
                     <p>{item.comment}</p>
                   </div>
@@ -77,12 +80,14 @@ export default function Comment({ expert_id }: { expert_id: string }) {
           </>
         )}
       </div>
-      <PaginationBar
-        currentPage={currentPage}
-        itemsPerPage={data?.limit ? data?.limit : 0}
-        totalItems={data?.total ? data.total : 0}
-        setCurrentPage={setCurrentPage}
-      />
+      {reviewData.length > 0 && (
+        <PaginationBar
+          currentPage={currentPage}
+          itemsPerPage={data?.limit ? data?.limit : 0}
+          totalItems={data?.total ? data.total : 0}
+          setCurrentPage={setCurrentPage}
+        />
+      )}
     </div>
   );
 }

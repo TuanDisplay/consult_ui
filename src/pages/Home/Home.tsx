@@ -29,7 +29,11 @@ export default function Home() {
                 className="h-60 w-48 rounded-xl object-cover shadow-md"
               />
               <div className="mt-4 text-gray-500">
-                <p>{data?.rating}/5.0 ⭐ </p>
+                <p>
+                  {data?.rating.average &&
+                    (Math.round(data?.rating.average * 10) / 10).toFixed(1)}
+                  /5.0 ⭐({data?.rating.total})
+                </p>
                 <p>{data?.consultation} lượt tư vấn</p>
                 <p>{data?.view} lượt xem</p>
               </div>

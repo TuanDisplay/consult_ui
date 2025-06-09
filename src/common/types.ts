@@ -27,6 +27,10 @@ export interface IExpProfile {
   expert_avatar: string;
 }
 
+interface IRating {
+  average: number;
+  total: number;
+}
 export interface IExpProfileApi {
   uuid: string;
   expertname: string;
@@ -37,7 +41,7 @@ export interface IExpProfileApi {
   password: string;
   image: string;
   is_active: number;
-  rating: number;
+  rating: IRating;
   view: number;
   consultation: number;
 }
@@ -55,6 +59,7 @@ export interface IExpReviewItem {
   customer_uuid: string;
   customer_name: string;
   customerAvartar: string;
+  created_at: string;
   rating: number;
   comment: string;
 }
