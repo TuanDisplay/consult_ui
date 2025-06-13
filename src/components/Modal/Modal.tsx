@@ -7,7 +7,7 @@ import { useCallback, useEffect, useRef, type ReactNode } from "react";
 interface IModal {
   children: ReactNode;
   className: string;
-  setMessageModal: any;
+  setMessageModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export default function Modal({

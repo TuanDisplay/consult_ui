@@ -1,4 +1,4 @@
-import Comment from "./Comment";
+import { Comment } from "./HomeItems";
 import { convertCategoryName } from "~/utils/files";
 import { useQuery } from "@tanstack/react-query";
 import * as expertService from "~/services/expert.service";
@@ -7,6 +7,7 @@ import Button from "~/components/Button";
 import LoadingScreen from "~/layouts/components/LoadingScreen";
 
 export default function Home() {
+
   const { data, isLoading } = useQuery({
     queryKey: ["expert-profile"],
     queryFn: async (): Promise<IExpProfileApi> => {

@@ -1,4 +1,4 @@
-import ratingRequest from "~/utils/axios/ratingRequest";
+import { ratingRequest } from "~/utils/axios";
 
 // export const messages = async (expert_id: string, params: number) => {
 //   const res = await ratingRequest.get(`/customer/rating/${expert_id}`, {
