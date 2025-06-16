@@ -1,4 +1,7 @@
+import { Plus } from "lucide-react";
 import { useState } from "react";
+import Button from "~/components/Button";
+import { BookingModal } from "~/pages/Home/HomeItems";
 
 interface Appointment {
   id: number;
@@ -33,65 +36,64 @@ const mockAppointments: Appointment[] = [
 ];
 
 export default function Booking() {
-  const [appointments, setAppointments] =
-    useState<Appointment[]>(mockAppointments);
-
-  const updateStatus = (id: number, status: "approved" | "cancelled") => {
-    setAppointments((prev) =>
-      prev.map((appt) => (appt.id === id ? { ...appt, status } : appt))
-    );
-  };
+  const [bookingModal, setBookingModal] = useState<boolean>(false);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
-      <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-6">
-        <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
-          Quản lý lịch hẹn
-        </h1>
-        <div className="space-y-4">
-          {appointments.map((appt) => (
-            <div
-              key={appt.id}
-              className="border border-gray-200 rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-gray-50 hover:shadow-md transition"
+    <>
+      {bookingModal && <BookingModal setBookingModal={setBookingModal} />}
+      <div className="min-h-screen bg-gray-50 p-4">
+        <div className="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-6">
+          <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
+            Quản lý lịch hẹn
+          </h1>
+          <div className="flex justify-end mb-2">
+            <Button
+              className="p-2 font-semibold pr-3 text-sm"
+              leftIcon={<Plus size={16} />}
+              primary
+              onClick={() => setBookingModal(true)}
             >
-              <div className="flex-1 space-y-1">
-                <p className="text-sm text-gray-700 font-semibold">
-                  {appt.name}
-                </p>
-                <p className="text-sm text-gray-500">{appt.email}</p>
-                <p className="text-sm text-gray-600">Thời gian: {appt.time}</p>
-                <p
-                  className={`text-sm font-medium ${
-                    appt.status === "approved"
-                      ? "text-green-600"
-                      : appt.status === "cancelled"
-                      ? "text-red-500"
-                      : "text-yellow-500"
-                  }`}
-                >
-                  Trạng thái: {appt.status}
-                </p>
-              </div>
-              {appt.status === "pending" && (
+              Thêm lịch hẹn
+            </Button>
+          </div>
+
+          <div className="space-y-4">
+            {mockAppointments.map((appt) => (
+              <div
+                key={appt.id}
+                className="border border-gray-200 rounded-xl p-4 flex flex-col md:flex-row md:items-center md:justify-between bg-gray-50 hover:shadow-md transition"
+              >
+                <div className="flex-1 space-y-1">
+                  <p className="text-sm text-gray-700 font-semibold">
+                    {appt.name}
+                  </p>
+                  <p className="text-sm text-gray-500">{appt.email}</p>
+                  <p className="text-sm text-gray-600">
+                    Thời gian: {appt.time}
+                  </p>
+                  <p
+                    className={`text-sm font-medium ${
+                      appt.status === "approved"
+                        ? "text-green-600"
+                        : appt.status === "cancelled"
+                        ? "text-red-500"
+                        : "text-yellow-500"
+                    }`}
+                  >
+                    Trạng thái: {appt.status}
+                  </p>
+                </div>
+
                 <div className="mt-3 md:mt-0 flex gap-2">
-                  <button
-                    onClick={() => updateStatus(appt.id, "approved")}
-                    className="px-3 py-1 bg-green-500 text-white rounded-lg hover:bg-green-600 text-sm"
-                  >
-                    Duyệt
-                  </button>
-                  <button
-                    onClick={() => updateStatus(appt.id, "cancelled")}
-                    className="px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm"
-                  >
+                  <button className="cursor-pointer px-3 py-1 bg-red-500 text-white rounded-lg hover:bg-red-600 text-sm">
                     Hủy
                   </button>
                 </div>
-              )}
-            </div>
-          ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 }
