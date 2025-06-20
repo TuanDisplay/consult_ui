@@ -11,3 +11,12 @@ export const addBooking = async (
     end_time: endTime,
   });
 };
+
+export const bookingList = async () => {
+  const res = await bookingRequest.get("/expert/booking-list");
+  return res.data;
+};
+
+export const delBooking = async (booking_id: string) => {
+  await bookingRequest.delete(`/expert/cancel/${booking_id}`);
+};

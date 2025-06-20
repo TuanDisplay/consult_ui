@@ -1,9 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { CalendarCog, LogOut, Mail } from "lucide-react";
+import { BellRing, CalendarCog, LogOut, Mail } from "lucide-react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { Menu as Wrapper, MenuButton } from "@headlessui/react";
+
 import type { IExpProfileApi } from "~/common/types";
 import * as expertService from "~/services/expert.service";
+import NotiMenu from "~/components/Menu";
 
 export default function Header() {
   const navigate = useNavigate();
@@ -49,6 +52,17 @@ export default function Header() {
             >
               <Mail className="text-[#2D9CDB] group-hover:text-blue-300 duration-300" />
             </Link>
+
+            <Wrapper>
+              <MenuButton
+                className="bg-[#D5E5F3] p-2.5 cursor-pointer rounded-lg group outline-0"
+                title="Thông báo"
+              >
+                <BellRing className="text-[#2D9CDB] group-hover:text-blue-300 duration-300" />
+              </MenuButton>
+              <NotiMenu />
+            </Wrapper>
+
             <div
               title="Log out"
               className="bg-[#F5DCE0] p-2.5 cursor-pointer rounded-lg group"

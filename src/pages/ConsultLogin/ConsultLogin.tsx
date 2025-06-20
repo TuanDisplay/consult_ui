@@ -1,3 +1,4 @@
+import type { AxiosError } from "axios";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -25,7 +26,8 @@ export default function ConsultLogin() {
         toast.success("Đăng nhập thành công");
       }
     } catch (err) {
-      console.error(err);
+      const error = err as AxiosError<{ message: string }>;
+      toast.error(error.response?.data.message || "Có lỗi xảy ra");
     }
   };
 

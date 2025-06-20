@@ -25,6 +25,22 @@ export const convertIsoDate = (isoDate: string) => {
   return formatted;
 };
 
+export const convertIsoDMonth = (isoDate: string) => {
+  const date = new Date(isoDate);
+  const formatted = date.toLocaleDateString('vi-VN', {
+    day: '2-digit',
+    month: '2-digit',
+  });
+  return formatted;
+};
+
+export const convertIsoHour = (isoDate: string) => {
+  const date = new Date(isoDate);
+  const hours = date.getUTCHours(); // Giờ theo UTC, không cộng thêm
+  const minutes = date.getUTCMinutes(); // Phút theo UTC
+  return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}`;
+};
+
 export const convertIsoDateTime = (isoDateTime: string) => {
   const date = new Date(isoDateTime);
   const formatted = date.toLocaleString('vi-VN', {
